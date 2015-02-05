@@ -28,7 +28,7 @@ if ($idx) {
 
                 <li>
                     <label for="id">Email</label>
-                    <input name="id" id="id" type="email" size="30" value="<?php echo ($idx) ? $obj_user->id : '' ?>" required />
+                    <input name="id" id="id" type="email" size="30" value="<?php echo ($idx) ? $obj_user->id : '' ?>" require <?php if($idx) { ?>disabled="true" <?php } ?> />
                 </li>
                 <li>
                     <label for="name">Name</label>
@@ -68,3 +68,18 @@ if ($idx) {
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+    $("#name").click(function(){
+        var id = $('#id').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo _BASE_URL_;?>/users/existIdCheck",
+            data: "id=" + id,
+            cache: false,
+            success: function(data){
+                $("#name").html(data);
+            }
+        });
+    });
+</script>

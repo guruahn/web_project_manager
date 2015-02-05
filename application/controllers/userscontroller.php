@@ -41,6 +41,13 @@ class UsersController extends Controller {
         }
     }
 
+    function existIdCheck() {
+        $this->User->getUser("id", array("id"=>trim(strval($_POST['id']))));
+        if( $this->User->count > 0 ){
+            msg_page("ID is already subscribed.");
+        }
+    }
+
     function add($idx=null) {
         $referer = (isset($_POST['referer'])? $_POST['referer'] : _BASE_URL_."/users/view_all" );
 
@@ -58,11 +65,6 @@ class UsersController extends Controller {
         );
 
         if ($idx == null) {
-            $this->User->getUser("id", array("id"=>$data['id']));
-            if( $this->User->count > 0 ){
-                msg_page("ID is already subscribed.");
-            }
-
             $id = $this->set('user',$this->User->add($data));
         } else {
             $id = $this->set('user',$this->User->updateUser($idx, $data));
