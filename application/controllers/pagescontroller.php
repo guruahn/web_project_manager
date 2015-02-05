@@ -78,20 +78,22 @@ class PagesController extends Controller {
                     $count_of_tasks = count( $task->getList('task',array('insert_date'=>'asc'), array(0, 1000), array('page_idx'=>$page_obj->idx, 'status'=>1), array("idx")) );
                     $del_open = ($page_obj->state == 4)? "<del>" : "";
                     $del_close = ($page_obj->state == 4)? "</del>" : "";
-                    $this->treeHTML .= "<li class='page'><div>";
+                    $this->treeHTML .= "<li class='page ".$state['en']."'><div>";
                         $this->treeHTML .= "<span class='radius state ".$state['en']." ".$state['class']."'>".$state['ko']."</span>";
                         $this->treeHTML .= "<span class='name'>".$del_open."<a href='".$page_obj->link."' target='_blank'>".$page_obj->name."</a>".$del_close."</span>";
                             $this->treeHTML .= "<span class='modify'><a href="._BASE_URL_."/pages/editForm/".$page_obj->idx." >수정</a></span>";
                             if($state['en']=='deleted'){
                                 $this->treeHTML .= "<span class='del delComplete'><a href="._BASE_URL_."/pages/delComplete/".$page_obj->idx."/".$project_idx." >완전삭제</a></span> ";
+                                $this->treeHTML .= "<span class='restoration'><a href="._BASE_URL_."/pages/restoration/".$page_obj->idx."/".$project_idx." > 복구</a></span> ";
                             }else{
                                 $this->treeHTML .= "<span class='del'><a href="._BASE_URL_."/pages/del/".$page_obj->idx."/".$project_idx." >삭제</a></span> ";
+                                $this->treeHTML .= "<span class='task'><a data-idx='".$page_obj->idx."' href='#' >할일(<span class='count_of_task_".$count_of_tasks."'>".$count_of_tasks."</span>)</a>";
+                                $taskListHTML = $this->taskList($page_obj->idx, $project_idx);
+                                $this->treeHTML .= " <span class='bullet_on'><i class='fa fa-chevron-circle-up '></i></span><span class='bullet_off'><i class='fa fa-chevron-circle-down '></i></span>";
+                                $this->treeHTML .= "</span></div>".$taskListHTML;
                             }
 
-                            $this->treeHTML .= "<span class='task'><a data-idx='".$page_obj->idx."' href='#' >할일(<span class='count_of_task_".$count_of_tasks."'>".$count_of_tasks."</span>)</a>";
-                            $taskListHTML = $this->taskList($page_obj->idx, $project_idx);
-                            $this->treeHTML .= " <span class='bullet_on'><i class='fa fa-chevron-circle-up '></i></span><span class='bullet_off'><i class='fa fa-chevron-circle-down '></i></span>";
-                            $this->treeHTML .= "</span></div>".$taskListHTML;
+
                     $this->treeHTML .= "</li>";
                 endforeach;
                 $this->treeHTML .= "</ul>";
@@ -218,6 +220,15 @@ class PagesController extends Controller {
         $task->delByPageIdx($idx);
 
         $this->Page->del($idx);
+        redirect(_BASE_URL_."/pages/view_all/".$project_idx);
+    }
+
+    function restoration($idx, $project_idx){
+        $data = Array(
+            "state" => 1,
+        );
+
+        $this->Page->updatePost($idx, $data);
         redirect(_BASE_URL_."/pages/view_all/".$project_idx);
     }
 

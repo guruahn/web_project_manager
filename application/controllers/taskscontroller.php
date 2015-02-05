@@ -89,13 +89,15 @@ class TasksController extends Controller {
             'result'=>0,
             'idx'=>''
         );
+        $due_date = (isset($_POST['due_date'])) ? $_POST['due_date'] : date("Y-m-d");
+        $due_date = date("Y-m-d", strtotime($due_date));
         $data = Array(
             "page_idx" => $_POST['page_idx'],
             "title" => $_POST['title'],
             "project_idx" => $_POST['project_idx'],
             "user_idx" => $_SESSION['LOGIN_NO'],
             "receiver_idx"=> $_POST['receiver_idx'],
-            "due_date" => date("Y-m-d")
+            "due_date" => $due_date
         );
 
         $task_id = $this->Task->add($data);

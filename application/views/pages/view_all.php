@@ -11,7 +11,7 @@
  **/
 
 ?>
-
+<link rel="stylesheet" href="<?php echo _BASE_URL_;?>/public/css/select/jquery.dateselect.css">
 <div id="wrapper" >
     <div id="title-area" class="small-11 small-centered  radius columns">
         <?php
@@ -62,7 +62,7 @@
     <div class="content">
         <div class="row submit_task_wrap">
 
-            <div class="large-4 columns" >
+            <div class="large-3 columns" >
                 <select name="user" id="user">
                     <option value="0">담당자</option>
                     <?php
@@ -75,8 +75,16 @@
                     ?>
                 </select>
             </div>
-            <div class="large-8 columns" style="padding:0">
+            <div class="large-6 columns" style="padding:0">
                 <input type="text" name="title" />
+            </div>
+            <div class="large-3 columns" style="padding:0">
+                <div class="small-9 columns">
+                    <input type="text" name="due_date" class="form-control"/>
+                </div>
+                <div class="small-3 columns">
+                    <i class="fa fa-calendar btn-date"></i>
+                </div>
             </div>
 
         </div>
@@ -86,6 +94,7 @@
     </div>
 </div>
 <script src="<?php echo _BASE_URL_;?>/public/js/jquery.bpopup.min.js"></script>
+<script type="text/javascript" src="<?php echo _BASE_URL_;?>/public/js/jquery.dateselect.min.js"></script>
 <script type="text/javascript">
 $(function(){
     var total_page = $('.page').length;
@@ -119,11 +128,12 @@ $(function(){
     $('#task_to_pop_up').on('click', '.submit_task', function(){
         var title = $('input[name=title]').val();
         var receiver_idx = $('select[name=user]').val();
+        var due_date = $('input[name=due_date]').val();
         if( !title){
             alert('내용을 입력해주세요.');
             return false;
         }else{
-            ajax_insert_task(title, $(this).attr('data-page-idx'), $(this).attr('data-project-idx'), receiver_idx, $('select[name=user] option:selected').text());
+            ajax_insert_task(title, $(this).attr('data-page-idx'), $(this).attr('data-project-idx'), receiver_idx, $('select[name=user] option:selected').text(), due_date);
         }
         return false;
     });
@@ -157,6 +167,14 @@ $(function(){
 
     });
 
+    /*datepicker*/
+    $('.btn-date').on('click', function(e) {
+        e.preventDefault();
+        $.dateSelect.show({
+            element: 'input[name="due_date"]'
+        });
+    });
+
 });
     /*change task status*/
     function ajax_update_task_status(idx, status, page_idx){
@@ -183,11 +201,11 @@ $(function(){
         });
     }
     /*task 추가*/
-    function ajax_insert_task(title, page_idx, project_idx, receiver_idx, receiver_name){
+    function ajax_insert_task(title, page_idx, project_idx, receiver_idx, receiver_name, due_date){
         $.ajax({
             type: "POST",
             url: "<?php echo _BASE_URL_;?>/api/tasks/addTask/",
-            data: {title: title, page_idx: page_idx, project_idx: project_idx, receiver_idx: receiver_idx},
+            data: {title: title, page_idx: page_idx, project_idx: project_idx, receiver_idx: receiver_idx, due_date: due_date},
             dataType: "json"
         }).success(function(data){
             if(data.result) {
