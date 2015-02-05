@@ -22,11 +22,11 @@
     <section class="top-bar-section">
         <!-- Right Nav Section -->
         <ul class="right">
-            <li><a href="<?php echo _BASE_URL_; ?>/users/joinForm">Join</a></li>
+            <!--<li><a href="<?php /*echo _BASE_URL_; */?>/users/joinForm">Join</a></li>-->
             <?php
             if( isset($_SESSION['LOGIN_ID']) && !empty($_SESSION['LOGIN_ID']) ){
             ?>
-            <li><a href="<?php echo _BASE_URL_; ?>/users/logout">Logout</a></li>
+                <li><a href="<?php echo _BASE_URL_; ?>/users/logout"><?php echo $_SESSION['LOGIN_ID']."님"; ?>&nbsp;&nbsp;Logout</a></li>
             <?php
             }else{
             ?>
