@@ -29,10 +29,12 @@
                         <?php echo text_cut_utf8($obj_project->name, 70); ?>
                     </a>
                 </h3>
+                <?php if ($_SESSION['LOGIN_LEVEL'] < 3) { ?>
                 <p class="button-group radius">
                     <span><a href="<?php echo _BASE_URL_;?>/project/editForm/<?php echo $obj_project->idx; ?>" class="button radius secondary tiny">수정</a></span>
-                    <span><a href="<?php echo _BASE_URL_;?>/project/del/<?php echo $obj_project->idx; ?>" class="button radius secondary tiny">삭제</a></span>
+                    <span><a href="<?php echo _BASE_URL_;?>/project/del/<?php echo $obj_project->idx; ?>" class="button radius secondary tiny">종료</a></span>
                 </p>
+                <?php } ?>
             <?php
             endforeach;
             ?>
@@ -40,9 +42,11 @@
         </div>
     </div>
 
+    <?php if ($_SESSION['LOGIN_LEVEL'] < 3) { ?>
     <div class="small-11 small-centered columns">
         <p class="button-group radius">
             <span><a href="<?php echo _BASE_URL_;?>/project/writeForm" class="button radius tiny">Add</a></span>
         </p>
     </div>
+    <?php } ?>
 </div>
