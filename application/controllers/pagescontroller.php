@@ -164,7 +164,11 @@ class PagesController extends Controller {
         }else if($state == 1){
             $result["en"] = "develop-finish";
             $result["ko"] = "개발 완료";
-            $result["class"] = "button tiny success state0";
+            $result["class"] = "button tiny success state1";
+        }else if($state == 4){
+            $result["en"] = "deleted";
+            $result["ko"] = "삭제됨";
+            $result["class"] = "button tiny deleted state4";
         }
         return $result;
     }
