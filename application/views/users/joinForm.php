@@ -27,8 +27,8 @@ if ($idx) {
             <ul>
 
                 <li>
-                    <label for="id">ID</label>
-                    <input name="id" id="id" type="text" size="30" value="<?php echo ($idx) ? $obj_user->id : '' ?>" />
+                    <label for="id">Email</label>
+                    <input name="id" id="id" type="email" size="30" value="<?php echo ($idx) ? $obj_user->id : '' ?>" required />
                 </li>
                 <li>
                     <label for="name">Name</label>
@@ -36,15 +36,22 @@ if ($idx) {
                 </li>
                 <li>
                     <label for="team">Team</label>
-                    <input name="team" id="team" type="text" size="30" value="<?php echo ($idx) ? $obj_user->team : '' ?>" />
+                    <select name="team" id="team" size="30">
+                        <option value="">선택</option>
+                        <option value="임원" <?php if ($idx) { if ($obj_user->team == '임원') { ?>selected<?php } } ?>>임원</option>
+                        <option value="기획팀" <?php if ($idx) { if ($obj_user->team == '기획팀') { ?>selected<?php } } ?>>기획팀</option>
+                        <option value="디자인팀" <?php if ($idx) { if ($obj_user->team == '디자인팀') { ?>selected<?php } } ?>>디자인팀</option>
+                        <option value="개발팀" <?php if ($idx) { if ($obj_user->team == '개발팀') { ?>selected<?php } } ?>>개발팀</option>
+                        <option value="경영지원팀" <?php if ($idx) { if ($obj_user->team == '경영지원팀') { ?>selected<?php } } ?>>경영지원팀</option>
+                    </select>
                 </li>
                 <li>
                     <label for="password">password</label>
-                    <input name="password" id="password" type="text" size="30" value="" />
+                    <input name="password" id="password" type="password" size="30" value="" />
                 </li>
                 <li>
                     <label for="repassword">repeat password</label>
-                    <input name="repassword" id="repassword" type="text" size="30" value="" />
+                    <input name="repassword" id="repassword" type="password" size="30" value="" />
                 </li>
                 <li>
                     <label for="level">Level</label>

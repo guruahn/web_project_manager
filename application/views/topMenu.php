@@ -26,7 +26,8 @@
             <?php
             if( isset($_SESSION['LOGIN_ID']) && !empty($_SESSION['LOGIN_ID']) ){
             ?>
-                <li><a href="<?php echo _BASE_URL_; ?>/users/logout"><?php echo $_SESSION['LOGIN_ID']."님"; ?>&nbsp;&nbsp;Logout</a></li>
+                <li><a href="<?php echo _BASE_URL_; ?>/users/joinForm/<?php echo $_SESSION['LOGIN_NO']; ?>"><?php echo $_SESSION['LOGIN_ID']."님"; ?>&nbsp;&nbsp;</a></li>
+                <li><a href="<?php echo _BASE_URL_; ?>/users/logout">Logout</a></li>
             <?php
             }else{
             ?>

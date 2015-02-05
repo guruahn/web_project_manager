@@ -56,12 +56,13 @@ class UsersController extends Controller {
             "level" => $_POST['level'],
             "insert_date" => date("Y-m-d H:i:s")
         );
-        $this->User->getUser("id", array("id"=>$data['id']));
-        if( $this->User->count > 0 ){
-            msg_page("ID is already subscribed.");
-        }
 
         if ($idx == null) {
+            $this->User->getUser("id", array("id"=>$data['id']));
+            if( $this->User->count > 0 ){
+                msg_page("ID is already subscribed.");
+            }
+
             $id = $this->set('user',$this->User->add($data));
         } else {
             $id = $this->set('user',$this->User->updateUser($idx, $data));

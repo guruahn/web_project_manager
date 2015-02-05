@@ -25,14 +25,15 @@
                 $obj_user = (object) $item;
                 ?>
                 <h3>
-                    <a href="<?php echo _BASE_URL_;?>/users/view_all/<?php echo $obj_user->idx; ?>">
-                        <?php echo text_cut_utf8($obj_user->name, 70); ?>
-                        (&nbsp;<?php echo text_cut_utf8($obj_user->team, 70); ?>&nbsp;)
-                    </a>
+                    <?php echo text_cut_utf8($obj_user->name, 70); ?>(&nbsp;<?php echo text_cut_utf8($obj_user->team, 70); ?>&nbsp;)
                 </h3>
                 <p class="button-group radius">
+                    <?php if ($_SESSION['LOGIN_ID'] == $obj_user->id || $_SESSION['LOGIN_LEVEL'] == '0') { ?>
                     <span><a href="<?php echo _BASE_URL_;?>/users/joinForm/<?php echo $obj_user->idx; ?>" class="button radius secondary tiny">수정</a></span>
+                    <?php } ?>
+                    <?php if ($_SESSION['LOGIN_LEVEL'] == '0') { ?>
                     <span><a href="<?php echo _BASE_URL_;?>/users/del/<?php echo $obj_user->idx; ?>" class="button radius secondary tiny">삭제</a></span>
+                    <?php } ?>
                 </p>
             <?php
             endforeach;
