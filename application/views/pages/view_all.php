@@ -191,7 +191,7 @@ $(function(){
             dataType: "json"
         }).success(function(data){
             if(data.result) {
-                $('.task-list').prepend('<li class="ing" data-idx="'+data.idx+'"><span class="do off"><i class="fa fa-check-square-o"></i></span><span class="do on"><i class="fa fa-square-o"></i></span><span class="receiver">'+receiver_name+'</span><span class="title">'+title+'</span>');
+                $('.task-list[data-page-idx='+page_idx+']').prepend('<li class="ing" data-idx="'+data.idx+'"><span class="do off"><i class="fa fa-check-square-o"></i></span><span class="do on"><i class="fa fa-square-o"></i></span><span class="receiver">'+receiver_name+'</span><span class="title">'+title+'</span>');
                 $('input[name=title]').val('');
                 $countObj = $('.task a[data-idx='+page_idx+'] span');
                 var count = $countObj.text();
