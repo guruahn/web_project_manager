@@ -20,24 +20,40 @@
     <div id="content-area" class="small-11 small-centered panel radius columns">
 
         <div class="project_list ">
+            <table>
+                <thead>
+                <tr>
+                    <th width="150">이름</th>
+                    <th width="150">소속팀</th>
+                    <th width="200">이메일</th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
             <?php
             foreach($users as $item):
                 $obj_user = (object) $item;
                 ?>
-                <h3>
-                    <?php echo text_cut_utf8($obj_user->name, 70); ?>(&nbsp;<?php echo text_cut_utf8($obj_user->team, 70); ?>&nbsp;)
-                </h3>
-                <p class="button-group radius">
-                    <?php if ($_SESSION['LOGIN_ID'] == $obj_user->id || $_SESSION['LOGIN_LEVEL'] == '0') { ?>
-                    <span><a href="<?php echo _BASE_URL_;?>/users/joinForm/<?php echo $obj_user->idx; ?>" class="button radius secondary tiny">수정</a></span>
-                    <?php } ?>
-                    <?php if ($_SESSION['LOGIN_LEVEL'] == '0') { ?>
-                    <span><a href="<?php echo _BASE_URL_;?>/users/del/<?php echo $obj_user->idx; ?>" class="button radius secondary tiny">삭제</a></span>
-                    <?php } ?>
-                </p>
+                    <tr>
+                        <td><?php echo text_cut_utf8($obj_user->name, 70); ?></td>
+                        <td><?php echo text_cut_utf8($obj_user->team, 70); ?></td>
+                        <td><?php echo text_cut_utf8($obj_user->id, 70); ?></td>
+                        <td>
+                            <p class="button-group radius">
+                                <?php if ($_SESSION['LOGIN_ID'] == $obj_user->id || $_SESSION['LOGIN_LEVEL'] == '0') { ?>
+                                    <span><a href="<?php echo _BASE_URL_;?>/users/joinForm/<?php echo $obj_user->idx; ?>" class="button radius secondary tiny">수정</a></span>
+                                <?php } ?>
+                                <?php if ($_SESSION['LOGIN_LEVEL'] == '0') { ?>
+                                    <span><a href="<?php echo _BASE_URL_;?>/users/del/<?php echo $obj_user->idx; ?>" class="button radius secondary tiny">삭제</a></span>
+                                <?php } ?>
+                            </p>
+                        </td>
+                    </tr>
             <?php
             endforeach;
             ?>
+                </tbody>
+            </table>
 
         </div>
     </div>
