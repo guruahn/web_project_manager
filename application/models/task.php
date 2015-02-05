@@ -69,7 +69,7 @@ class Task extends Model {
     }
 
     /*
-    * update post
+    * update task
     * @param
     * @return array
     */
@@ -80,13 +80,24 @@ class Task extends Model {
     }
 
     /*
-    * delete post
+    * delete task
     * @param
     * @return array
     */
     public function del($idx)
     {
         $this->where ('idx', $idx);
+        return	$this->delete('task');
+    }
+
+    /*
+    * delete all task by page_idx
+    * @param
+    * @return array
+    */
+    public function delByPageIdx($page_idx)
+    {
+        $this->where ('page_idx', $page_idx);
         return	$this->delete('task');
     }
 

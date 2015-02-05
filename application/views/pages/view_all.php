@@ -149,6 +149,14 @@ $(function(){
         }
         $('.task_all_toggle').toggle();
     });
+    /*할일 완전삭제*/
+    $('.delComplete').click(function(){
+        if(!confirm("정말 삭제하시겠습니까? 이 페이지에 할당된 할일이 모두 삭제됩니다.")){
+            return false;
+        }
+
+    });
+
 });
     /*change task status*/
     function ajax_update_task_status(idx, status, page_idx){
