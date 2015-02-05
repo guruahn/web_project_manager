@@ -48,8 +48,8 @@
             <li class="categories">
                 <a href="<?php echo _BASE_URL_; ?>/categories/view_all">Categories</a>
             </li>
-            <li class="posts">
-                <a href="<?php echo _BASE_URL_; ?>/posts/view_all">Posts</a>
+            <li class="users">
+                <a href="<?php echo _BASE_URL_; ?>/users/view_all">Members</a>
             </li>
         </ul>
     </section>

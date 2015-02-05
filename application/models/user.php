@@ -53,11 +53,11 @@ class User extends Model {
     }
 
 
-   /*
-    * add post
-    * @param
-    * @return array
-    */
+    /*
+     * add post
+     * @param
+     * @return array
+     */
     public function add($data)
     {
         $id = $this->insert('user', $data);
@@ -69,9 +69,20 @@ class User extends Model {
     * @param
     * @return array
     */
-    public function update($id, $data)
+    public function updateUser($idx, $data)
     {
-        $this->where ('id', $id);
-        return	$this->update('user', $data);;
+        $this->where ('idx', $idx);
+        return $this->update('user', $data);
+    }
+
+    /*
+    * delete post
+    * @param
+    * @return array
+    */
+    public function del($idx)
+    {
+        $this->where ('idx', $idx);
+        return	$this->delete('user');
     }
 }

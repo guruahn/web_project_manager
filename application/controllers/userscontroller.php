@@ -14,16 +14,35 @@ class UsersController extends Controller {
 
     function view($id = null,$name = null) {
         $this->set('title',$name.' - GJboard View App');
-        $this->set('post',$this->Post->getPost( "*", array("id"=>$id) ));
+        $this->set('post',$this->User->getPost( "*", array("id"=>$id) ));
 
     }
 
-    function joinForm() {
-        $this->set('title','join user - Project manager');
+    function view_all($thispage=1, $filter=null, $category_id = null) {
+        $where = null;
+        if(is_null($thispage) || empty($thispage)) $thispage = 1;
+        $limit = array( ($thispage-1)*10, 10 );
+
+        $users = $this->User->getList( array('level'=>'asc'), $limit, $where);
+
+        $this->set('title','All Members');
+        $this->set('users',$users);
+
     }
 
-    function add() {
-        $referer = (isset($_POST['referer'])? $_POST['referer'] : _BASE_URL_."/project/view_all" );
+    function joinForm($idx=null) {
+        $this->set('idx', $idx);
+        if($idx != null) {
+            $this->set('title','update user - Project manager');
+
+            $this->set('user', $this->User->getUser( "*", array("idx"=>$idx) ));
+        } else {
+            $this->set('title','join user - Project manager');
+        }
+    }
+
+    function add($idx=null) {
+        $referer = (isset($_POST['referer'])? $_POST['referer'] : _BASE_URL_."/users/view_all" );
 
         if( !trim($_POST['name']) || !trim($_POST['id']) || !trim($_POST['password']) ){
             msg_page("Required fields are missing.");
@@ -32,7 +51,9 @@ class UsersController extends Controller {
         $data = Array(
             "id" => trim(strval($_POST['id'])),
             "name" => trim(strval($_POST['name'])),
+            "team" => trim(strval($_POST['team'])),
             "password" => $this->User->func('SHA1(?)', Array( trim(strval($_POST['password'])).SALT) ),
+            "level" => $_POST['level'],
             "insert_date" => date("Y-m-d H:i:s")
         );
         $this->User->getUser("id", array("id"=>$data['id']));
@@ -40,8 +61,23 @@ class UsersController extends Controller {
             msg_page("ID is already subscribed.");
         }
 
-        $id = $this->set('user',$this->User->add($data));
+        if ($idx == null) {
+            $id = $this->set('user',$this->User->add($data));
+        } else {
+            $id = $this->set('user',$this->User->updateUser($idx, $data));
+        }
         redirect($referer);
+    }
+
+    function del($idx = null) {
+
+        if( $this->User->del($idx) ){
+            msg_page('Success delete user.', _BASE_URL_."/users/view_all");
+            exit;
+        }else{
+            msg_page('Cannot delete this user.');
+            exit;
+        }
     }
 
     function loginForm() {
