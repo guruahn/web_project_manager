@@ -32,7 +32,7 @@
                 <?php if ($_SESSION['LOGIN_LEVEL'] < 3) { ?>
                 <p class="button-group radius">
                     <span><a href="<?php echo _BASE_URL_;?>/project/editForm/<?php echo $obj_project->idx; ?>" class="button radius secondary tiny">수정</a></span>
-                    <span><a href="<?php echo _BASE_URL_;?>/project/del/<?php echo $obj_project->idx; ?>" class="button radius secondary tiny">종료</a></span>
+                    <span><a href="<?php echo _BASE_URL_;?>/project/closePrj/<?php echo $obj_project->idx; ?>" class="button radius secondary tiny">종료</a></span>
                 </p>
                 <?php } ?>
             <?php
@@ -45,7 +45,8 @@
     <?php if ($_SESSION['LOGIN_LEVEL'] < 3) { ?>
     <div class="small-11 small-centered columns">
         <p class="button-group radius">
-            <span><a href="<?php echo _BASE_URL_;?>/project/writeForm" class="button radius tiny">Add</a></span>
+            <span><a href="<?php echo _BASE_URL_;?>/project/writeForm" class="button radius tiny">Add</a></span>&nbsp;
+            <span><a href="<?php echo _BASE_URL_;?>/project/view_closed" class="button radius tiny">종료된 프로젝트 보기</a></span>
         </p>
     </div>
     <?php } ?>

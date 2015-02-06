@@ -85,5 +85,4 @@ class Project extends Model {
         return	$this->delete('project');
     }
 
-
 }

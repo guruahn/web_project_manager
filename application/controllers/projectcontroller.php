@@ -23,7 +23,7 @@ class ProjectController extends Controller {
     }
 
     function view_all($thispage=1, $filter=null, $category_id = null) {
-        $where = null;
+        $where = array('closed'=>'N');
         if(is_null($thispage) || empty($thispage)) $thispage = 1;
         $limit = array( ($thispage-1)*10, 10 );
 
@@ -32,6 +32,17 @@ class ProjectController extends Controller {
         $this->set('title','All Project');
         $this->set('project',$project);
 
+    }
+
+    function view_closed($thispage=1) {
+        $where = array('closed'=>'Y');
+        if(is_null($thispage) || empty($thispage)) $thispage = 1;
+        $limit = array( ($thispage-1)*10, 10 );
+
+        $project = $this->Project->getList( array('insert_date'=>'desc'), $limit, $where);
+
+        $this->set('title','Closed Project');
+        $this->set('project',$project);
     }
 
     function writeForm() {
@@ -165,5 +176,13 @@ class ProjectController extends Controller {
         if( $this->Post->addAttachment($data) ) $result['result'] = 1;
 
         return $result;
+    }
+
+    function closePrj($idx=null) {
+        $data = Array(
+            "closed" => 'Y'
+        );
+        $this->Project->updateProject($idx, $data);
+        redirect(_BASE_URL_."/project/view_all");
     }
 }
