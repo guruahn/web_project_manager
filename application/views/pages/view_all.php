@@ -10,36 +10,31 @@
  * @version   1.0
  **/
 ?>
-<link rel="stylesheet" href="<?php echo _BASE_URL_;?>/public/css/select/jquery.dateselect.css">
-<div id="wrapper" >
-    <div id="title-area" class="small-11 small-centered  radius columns">
-        <?php
-        foreach($project_list as $project):
-            $obj_project = (object) $project;
-            if( $obj_project->idx == $filter_project_id ) $title = text_cut_utf8($obj_project->name, 70);
-        endforeach;
-        ?>
-        <h2><?php echo $title;?></h2>
-    </div>
 
-    <div class="small-11 small-centered columns ">
-            
+
+<div id="content" class="large-9 columns">
+    <link rel="stylesheet" href="<?php echo _BASE_URL_;?>/public/css/select/jquery.dateselect.css">
+
+
+    <div class="small-11 columns ">
+
         <div class="state_list">
             <ul class="button-group">
               <li><a href="#" class="button tiny radius alert state1">진행중</a></li>
               <li><a href="#" class="button tiny radius success state4">완료</a></li>
+              <li class="task_all_toggle_wrap">
+                  <a href="#" class="button tiny radius task_all_toggle  off">할일 모두 닫기 <i class="fa fa-angle-double-up"></i></a>
+                  <a href="#" class="button tiny radius task_all_toggle hidden">할일 모두 열기 <i class="fa fa-angle-double-down"></i></a>
+              </li>
             </ul>
         </div>
-        
+
     </div>
-    <div id="content-area" class="small-11 small-centered panel radius columns">
+    <div id="content-area" class="small-11 panel radius columns">
         <div class="progress small-4 success round" style="float: right;">
             <span class="meter" style="width: 0%"></span><span id="meter_text">0</span>%
         </div>
-        <div class="task_all_toggle_wrap" style="clear:both">
-            <button class="button tiny radius task_all_toggle off">할일 모두 닫기 <i class="fa fa-angle-double-up"></i></button>
-            <button class="button tiny radius task_all_toggle on">할일 모두 열기 <i class="fa fa-angle-double-down"></i></button>
-        </div>
+
 
         <div class="page_list ">
             <?php
@@ -47,14 +42,14 @@
             ?>
         </div>
     </div>
-    <div class="small-11 small-centered columns">
+    <div class="small-11 columns">
         <p class="button-group radius">
             <span><a href="<?php echo _BASE_URL_;?>/pages/writeform/<?php echo $filter_project_id; ?>" class="button radius tiny">Add</a></span>
             <span><a href="<?php echo _BASE_URL_;?>/project/view_all" class="button secondary radius tiny">Project List</a></span>
             <span><a href="<?php echo _BASE_URL_;?>/categories/view_all/<?php echo $filter_project_id; ?>" class="button secondary radius tiny">Category Add</a></span>
         </p>
     </div>
-</div>
+</div><!--//#content-->
 <!--popup-->
 <div id="task_to_pop_up" class="panel radius">
     <a href="#" class="b-close"><i class="fa fa-times"></i></a>
@@ -157,7 +152,7 @@ $(function(){
             $('.bullet_on').show();
             $('.bullet_off').hide();
         }
-        $('.task_all_toggle').toggle();
+        $('.task_all_toggle').toggleClass('hidden');
     });
     /*할일 완전삭제*/
     $('.delComplete').click(function(){

@@ -35,3 +35,4 @@ if( !is_login() && $controller != "users") redirect(_BASE_URL_.'/users/loginForm
 
     </head>
     <body class="<?php echo $controller; ?> <?php echo $controller."-",$action; ?>">
+        <div id="wrapper" class="small-11 large-11 large-centered columns row">

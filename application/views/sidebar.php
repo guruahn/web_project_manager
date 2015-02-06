@@ -1,0 +1,36 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 개발2
+ * Date: 15. 2. 6
+ * Time: 오후 8:29
+ */
+?>
+<div id="sidebar" class="large-3 columns">
+    <div class="logo">Project Manager</div>
+    <div class="project_list">
+        <ul>
+        <?php
+        foreach($project_list as $project):
+            $obj_project = (object) $project;
+            $selected = "";
+            $title = text_cut_utf8($obj_project->name, 70);
+            if( $obj_project->idx == $filter_project_id )$selected = "selected";
+            ?>
+            <li class='<?php echo $selected; ?>'>
+                <i class="fa fa-caret-right"></i>
+                <a href="<?php echo _BASE_URL_;?>/pages/view_all/<?php echo $obj_project->idx; ?>"><?php echo $title; ?></a>
+            </li>
+            <?php
+        endforeach;
+        ?>
+        </ul>
+
+    </div>
+    <div class="widget">
+        <ul>
+            <li><i class="fa fa-plus"></i> 프로젝트 추가하기</li>
+        </ul>
+    </div>
+    <div class="widget "></div>
+</div>

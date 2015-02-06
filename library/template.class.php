@@ -43,12 +43,7 @@ class Template {
             include (ROOT . DS . 'application' . DS . $view_path . DS . 'header.php');
         }
 
-        if (file_exists(ROOT . DS . 'application' . DS . $view_path . DS . $this->_controller . DS . 'topMenu.php')) {
-            include (ROOT . DS . 'application' . DS . $view_path . DS . $this->_controller . DS . 'topMenu.php');
-        } else {
-            include (ROOT . DS . 'application' . DS . $view_path . DS . 'topMenu.php');
-        }
-
+        include (ROOT . DS . 'application' . DS . $view_path . DS . 'sidebar.php');
         include (ROOT . DS . 'application' . DS . $view_path . DS . $this->_controller . DS . $this->_action . '.php');
 
         if (file_exists(ROOT . DS . 'application' . DS . $view_path . DS . $this->_controller . DS . 'footer.php')) {

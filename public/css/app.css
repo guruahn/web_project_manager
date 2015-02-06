@@ -3,7 +3,7 @@ body {
 
 }
 body, h2, h3, h4 {font-family: '나눔바른고딕','맑은 고딕',"Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif!important;}
-#wrapper { margin-top: 15px; padding: 0 15px;  }
+#wrapper { margin-top: 15px; padding: 0 15px; overflow: hidden }
 #title-area {  }
 #content-area { background-color: #fff; }
 body ul li { list-style: none; }
@@ -15,7 +15,35 @@ body ul li { list-style: none; }
 	line-height: 0;
 	margin-top: 3px;
 }
+/*sidebar*/
 
+#sidebar .logo {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+#sidebar ul { margin: 0}
+#sidebar li {
+    font-size: 0.9em;
+    padding: 5px;
+}
+#sidebar .project_list li:hover {
+    background-color: #fff;
+}
+#sidebar .project_list li .fa-caret-right {
+    visibility: hidden;
+}
+#sidebar .project_list li.selected .fa-caret-right {
+    visibility: visible;
+}
+#sidebar .project_list li.selected { font-weight: bold;}
+#sidebar .project_list {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
 /*Page list*/
 .pages-view_all .state_list { text-align: right; }
 .pages-view_all .button.tiny {
@@ -31,8 +59,8 @@ body ul li { list-style: none; }
 	padding: 0;
 	text-indent: -1000em;
 }
-.pages-view_all .task_all_toggle_wrap { float: right; font-size: 0.8em; cursor: pointer}
-.pages-view_all .task_all_toggle_wrap .task_all_toggle.on {display: none; }
+.pages-view_all .task_all_toggle_wrap .task_all_toggle { display: block; }
+.pages-view_all .task_all_toggle_wrap .task_all_toggle.hidden {display: none; }
 .pages-view_all .page_list li {
 	clear: both;
 	list-style: none;
