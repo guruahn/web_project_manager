@@ -161,7 +161,7 @@ $(function(){
     });
     /*할일 완전삭제*/
     $('.delComplete').click(function(){
-        if(!confirm("정말 삭제하시겠습니까? 이 페이지에 할당된 할일이 모두 삭제됩니다.")){
+        if(!confirm("정말 삭제하시겠습니까? 이 페이지에 할당된 할일이 모두 삭제됩니다. 완전삭제 하시면 복구되지 않습니다.")){
             return false;
         }
 
@@ -215,28 +215,6 @@ $(function(){
                 var count = $countObj.text();
                 $countObj.text(Number(count)+1);
                 $('#task_to_pop_up').bPopup().close();
-            }
-        }).fail(function(response){
-            console.log(printr_json(response));
-        });
-    }
-    /*task 리스트*/
-    function ajax_get_task_list(page_idx){
-        $.ajax({
-            type: "POST",
-            url: "<?php echo _BASE_URL_;?>/api/tasks/view_all/"+page_idx,
-            dataType: "json"
-        }).success(function(data){
-            if(data.result) {
-                //console.log(printr_json(data));
-
-                var list = data.list.map(function(item, index){
-                    return '<li class="'+makeStatus(item.status)+'" data-idx="'+item.idx+'"><span class="title">'+item.title+'</span><span class="receiver">'+item.u_name+'</span><span class="do">완료</span></li>';
-                }).join('');
-                var header = '<li class="header"><span class="title">제목</span><span class="receiver">담당</span><span class="do">처리</span></li>'
-                $('#task-list').html(header+list);
-                $('.submit_task').attr('data-idx', page_idx);
-                $('input[name=title]').val('');
             }
         }).fail(function(response){
             console.log(printr_json(response));
