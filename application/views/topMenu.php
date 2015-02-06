@@ -46,9 +46,9 @@
                     <li><a href="<?php echo _BASE_URL_; ?>/project/writeform">Add Project</a></li>
                 </ul>
             </li>
-            <li class="categories">
+            <!--<li class="categories">
                 <a href="<?php echo _BASE_URL_; ?>/categories/view_all">Categories</a>
-            </li>
+            </li>-->
             <li class="users">
                 <a href="<?php echo _BASE_URL_; ?>/users/view_all">Members</a>
             </li>

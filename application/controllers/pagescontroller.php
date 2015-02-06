@@ -81,15 +81,21 @@ class PagesController extends Controller {
                     $this->treeHTML .= "<li class='page ".$state['en']."'><div>";
                         $this->treeHTML .= "<span class='radius state ".$state['en']." ".$state['class']."'>".$state['ko']."</span>";
                         $this->treeHTML .= "<span class='name'>".$del_open."<a href='".$page_obj->link."' target='_blank'>".$page_obj->name."</a>".$del_close."</span>";
-                            $this->treeHTML .= "<span class='modify'><a href="._BASE_URL_."/pages/editForm/".$page_obj->idx." >수정</a></span>";
+                            if ($_SESSION['LOGIN_LEVEL'] < 3) {
+                                $this->treeHTML .= "<span class='modify'><a href="._BASE_URL_."/pages/editForm/".$page_obj->idx." >수정</a></span>";
+                            }
                             if($state['en']=='deleted'){
-                                $this->treeHTML .= "<span class='del delComplete'><a href="._BASE_URL_."/pages/delComplete/".$page_obj->idx."/".$project_idx." >완전삭제</a></span> ";
-                                $this->treeHTML .= "<span class='restoration'><a href="._BASE_URL_."/pages/restoration/".$page_obj->idx."/".$project_idx." > 복구</a></span> ";
+                                if ($_SESSION['LOGIN_LEVEL'] < 3) {
+                                    $this->treeHTML .= "<span class='del delComplete'><a href="._BASE_URL_."/pages/delComplete/".$page_obj->idx."/".$project_idx." >완전삭제</a></span> ";
+                                    $this->treeHTML .= "<span class='restoration'><a href="._BASE_URL_."/pages/restoration/".$page_obj->idx."/".$project_idx." > 복구</a></span> ";
+                                }
                             }else{
-                                $this->treeHTML .= "<span class='del'><a href="._BASE_URL_."/pages/del/".$page_obj->idx."/".$project_idx." >삭제</a></span> ";
+                                if ($_SESSION['LOGIN_LEVEL'] < 3) {
+                                    $this->treeHTML .= "<span class='del'><a href="._BASE_URL_."/pages/del/".$page_obj->idx."/".$project_idx." >삭제</a></span> ";
+                                }
                                 $this->treeHTML .= "<span class='task'><a data-idx='".$page_obj->idx."' href='#' >할일(<span class='count_of_task_".$count_of_tasks."'>".$count_of_tasks."</span>)</a>";
                                 $taskListHTML = $this->taskList($page_obj->idx, $project_idx);
-                                $this->treeHTML .= " <span class='bullet_on'><i class='fa fa-chevron-circle-up '></i></span><span class='bullet_off'><i class='fa fa-chevron-circle-down '></i></span>";
+                                $this->treeHTML .= "<span class='bullet_on'><i class='fa fa-chevron-circle-up '></i></span><span class='bullet_off'><i class='fa fa-chevron-circle-down '></i></span>";
                                 $this->treeHTML .= "</span></div>".$taskListHTML;
                             }
 
@@ -114,7 +120,7 @@ class PagesController extends Controller {
         $limit = array( 0, 100 );
         $where = array( "t.page_idx"=>$page_idx );
         $task->join("user u", "u.idx=t.receiver_idx", "LEFT");
-        $column = array("u.idx as u_idx", "u.name as u_name", "t.idx as idx", "t.title as title", "t.status as status");
+        $column = array("u.idx as u_idx", "u.id as u_id", "u.name as u_name", "t.idx as idx", "t.title as title", "t.status as status");
         $task_list = $task->getList("task t", array('t.insert_date'=>'desc'), $limit, $where, $column);
 
         $task_list_HTML = "";
@@ -137,8 +143,11 @@ class PagesController extends Controller {
                 $evenOrOdd = ($evenOrOdd == 'odd')? "even" : "odd";
             }
         }
-        $task_list_HTML .= '<li><i class="fa fa-plus add" data-page-idx="'.$page_idx.'" data-project-idx="'.$project_idx.'"></i></li>';
+        if ($_SESSION['LOGIN_LEVEL'] < 3) {
+            $task_list_HTML .= '<li><i class="fa fa-plus add" data-page-idx="'.$page_idx.'" data-project-idx="'.$project_idx.'"></i></li>';
+        }
         $task_list_HTML .= '</ul>';
+
         return $task_list_HTML;
     }
 
@@ -179,6 +188,7 @@ class PagesController extends Controller {
         }
         return $result;
     }
+
     function writeForm($project_idx) {
         $limit = array( 0, 1000 );
         $where = array(

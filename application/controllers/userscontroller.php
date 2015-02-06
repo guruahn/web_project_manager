@@ -44,7 +44,7 @@ class UsersController extends Controller {
     function existIdCheck() {
         $this->User->getUser("id", array("id"=>trim(strval($_POST['id']))));
         if( $this->User->count > 0 ){
-            msg_page("ID is already subscribed.");
+            msg_page("ID is already subscribed.", "none");
         }
     }
 

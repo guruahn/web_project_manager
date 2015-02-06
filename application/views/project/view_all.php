@@ -42,12 +42,11 @@
         </div>
     </div>
 
-    <?php if ($_SESSION['LOGIN_LEVEL'] < 3) { ?>
     <div class="small-11 small-centered columns">
         <p class="button-group radius">
-            <span><a href="<?php echo _BASE_URL_;?>/project/writeForm" class="button radius tiny">Add</a></span>&nbsp;
+            <?php if ($_SESSION['LOGIN_LEVEL'] < 3) { ?><span><a href="<?php echo _BASE_URL_;?>/project/writeForm" class="button radius tiny">Add</a></span>&nbsp;<?php } ?>
             <span><a href="<?php echo _BASE_URL_;?>/project/view_closed" class="button radius tiny">종료된 프로젝트 보기</a></span>
         </p>
     </div>
-    <?php } ?>
+
 </div>

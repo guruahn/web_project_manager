@@ -9,7 +9,6 @@
  * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
  * @version   1.0
  **/
-
 ?>
 <link rel="stylesheet" href="<?php echo _BASE_URL_;?>/public/css/select/jquery.dateselect.css">
 <div id="wrapper" >
@@ -41,17 +40,18 @@
             <button class="button tiny radius task_all_toggle off">할일 모두 닫기 <i class="fa fa-angle-double-up"></i></button>
             <button class="button tiny radius task_all_toggle on">할일 모두 열기 <i class="fa fa-angle-double-down"></i></button>
         </div>
+
         <div class="page_list ">
             <?php
             echo $tree;
             ?>
         </div>
     </div>
-
     <div class="small-11 small-centered columns">
         <p class="button-group radius">
             <span><a href="<?php echo _BASE_URL_;?>/pages/writeform/<?php echo $filter_project_id; ?>" class="button radius tiny">Add</a></span>
             <span><a href="<?php echo _BASE_URL_;?>/project/view_all" class="button secondary radius tiny">Project List</a></span>
+            <span><a href="<?php echo _BASE_URL_;?>/categories/view_all/<?php echo $filter_project_id; ?>" class="button secondary radius tiny">Category Add</a></span>
         </p>
     </div>
 </div>
@@ -64,12 +64,12 @@
 
             <div class="large-3 columns" >
                 <select name="user" id="user">
-                    <option value="0">담당자</option>
+                   <!--<option value="0">담당자</option>-->
                     <?php
                     foreach($users as $user):
                         $obj_user = (object) $user;
                     ?>
-                        <option value="<?php echo $obj_user->idx;?>"><?php echo $obj_user->name; ?></option>
+                        <option value="<?php echo $obj_user->idx;?>" <?php echo ($obj_user->name == $_SESSION['LOGIN_NAME']) ? 'selected' : ''; ?>><?php echo $obj_user->name; ?></option>
                     <?php
                     endforeach;
                     ?>

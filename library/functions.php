@@ -93,6 +93,8 @@ function msg_page($msg, $url=""){
         $url="history.go(-1)";
     }else if($url=="close"){
         $url="window.close()";
+    }else if($url=="none"){
+        $url="";
     }else{
         $url="document.location.href='$url'";
     }
