@@ -35,15 +35,16 @@ if ($idx) {
                     <input name="name" id="name" type="text" size="30" value="<?php echo ($idx) ? $obj_user->name : '' ?>" />
                 </li>
                 <li>
-                    <label for="team">Team</label>
-                    <select name="team" id="team" size="30">
-                        <option value="">선택</option>
-                        <option value="임원" <?php if ($idx) { if ($obj_user->team == '임원') { ?>selected<?php } } ?>>임원</option>
-                        <option value="기획팀" <?php if ($idx) { if ($obj_user->team == '기획팀') { ?>selected<?php } } ?>>기획팀</option>
-                        <option value="디자인팀" <?php if ($idx) { if ($obj_user->team == '디자인팀') { ?>selected<?php } } ?>>디자인팀</option>
-                        <option value="개발팀" <?php if ($idx) { if ($obj_user->team == '개발팀') { ?>selected<?php } } ?>>개발팀</option>
-                        <option value="경영지원팀" <?php if ($idx) { if ($obj_user->team == '경영지원팀') { ?>selected<?php } } ?>>경영지원팀</option>
+                    <label for="team">Team
+                        <select name="team" id="team">
+                            <option value="">선택</option>
+                            <option value="임원" <?php if ($idx) { if ($obj_user->team == '임원') { ?>selected<?php } } ?>>임원</option>
+                            <option value="기획팀" <?php if ($idx) { if ($obj_user->team == '기획팀') { ?>selected<?php } } ?>>기획팀</option>
+                            <option value="디자인팀" <?php if ($idx) { if ($obj_user->team == '디자인팀') { ?>selected<?php } } ?>>디자인팀</option>
+                            <option value="개발팀" <?php if ($idx) { if ($obj_user->team == '개발팀') { ?>selected<?php } } ?>>개발팀</option>
+                            <option value="경영지원팀" <?php if ($idx) { if ($obj_user->team == '경영지원팀') { ?>selected<?php } } ?>>경영지원팀</option>
                     </select>
+                    </label>
                 </li>
                 <li>
                     <label for="password">password</label>
@@ -54,13 +55,14 @@ if ($idx) {
                     <input name="repassword" id="repassword" type="password" size="30" value="" />
                 </li>
                 <li>
-                    <label for="level">Level</label>
-                    <select name="level" id="level" size="30">
-                        <option value="0" <?php if ($idx) { if ($obj_user->level == '0') { ?>selected<?php } } ?>>최고관리자</option>
-                        <option value="1" <?php if ($idx) { if ($obj_user->level == '1') { ?>selected<?php } } ?>>PM</option>
-                        <option value="2" <?php if ($idx) { if ($obj_user->level == '2') { ?>selected<?php } } ?>>팀장</option>
-                        <option value="3" <?php if ($idx) { if ($obj_user->level == '3') { ?>selected<?php } } else { ?>selected<?php } ?>>팀원</option>
-                    </select>
+                    <label for="level">Level
+                        <select name="level" id="level">
+                            <option value="0" <?php if ($idx) { if ($obj_user->level == '0') { ?>selected<?php } } ?>>최고관리자</option>
+                            <option value="1" <?php if ($idx) { if ($obj_user->level == '1') { ?>selected<?php } } ?>>PM</option>
+                            <option value="2" <?php if ($idx) { if ($obj_user->level == '2') { ?>selected<?php } } ?>>팀장</option>
+                            <option value="3" <?php if ($idx) { if ($obj_user->level == '3') { ?>selected<?php } } else { ?>selected<?php } ?>>팀원</option>
+                        </select>
+                    </label>
                 </li>
 
             </ul>
