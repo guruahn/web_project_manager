@@ -84,11 +84,12 @@ class UsersController extends Controller {
     }
 
     function loginForm() {
+        $this->set('project_list',null);
         $this->set('title','login user - Project Manager App');
     }
 
     function login() {
-        $referer = (isset($_POST['referer']) && !empty($_POST['referer']) ? $_POST['referer'] : _BASE_URL_."/project/view_all" );
+        $referer = (isset($_POST['referer']) && !empty($_POST['referer']) ? $_POST['referer'] : _BASE_URL_."/pages/view_all" );
         if( !trim($_POST['id']) || !trim($_POST['password']) ){
             msg_page("Required fields are missing.");
         }

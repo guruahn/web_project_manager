@@ -22,7 +22,7 @@ class PagesController extends Controller {
         $this->set('post',$post);
     }
 
-    function view_all($project_idx) {
+    function view_all($project_idx = null) {
         $thispage = 1;
         $limit = array( ($thispage-1)*10, 10 );
 
