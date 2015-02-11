@@ -8,7 +8,7 @@
 
 ?>
 </div><!--//#wrapper-->
-<div id="footer" class="large-11 large-centered columns">Project manager ver 0.1.0 by gongjam</div>
+<div id="footer" class="large-11 large-centered columns">Project manager ver 0.1.0</div>
 <script src="<?php echo _BASE_URL_;?>/public/js/functions.js"></script>
 <script>
     $(function(){
