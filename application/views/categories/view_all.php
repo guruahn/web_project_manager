@@ -14,27 +14,10 @@
 
 <div id="wrapper">
     <div id="title-area" class="small-11 small-centered columns">
-        <h2><?php echo $title;?></h2>
+        <h2><?php echo $page_title;?></h2>
     </div>
     <div id="content-area" class="small-11 small-centered panel radius columns">
-        <div class="small-11 small-centered columns ">
-            <dl class="sub-nav radius">
-                <dt>Project:</dt>
-                <?php
-                $is_active = null;
-                foreach($project_list as $project):
-                    $obj_project = (object) $project;
-                    $is_active = "";
-                    if( $obj_project->idx == $filter_project_id ) $is_active = "active";
-                    ?>
-                    <dd class="<?php echo $is_active; ?>">
-                        <a href="<?php echo _BASE_URL_;?>/categories/view_all/<?php echo $obj_project->idx; ?>"><?php echo text_cut_utf8($obj_project->name, 70); ?></a>
-                    </dd>
-                <?php
-                endforeach;
-                ?>
-            </dl>
-        </div>
+
         <div class="category_list radius small-5 columns">
             <ul>
             <?php

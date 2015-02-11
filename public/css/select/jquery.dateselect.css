@@ -83,7 +83,7 @@
     font-size: 34px;
     position: absolute;
     left: 0;
-    bottom: 28px;
+    bottom: 43px;
     color: #555;
 }
 
@@ -193,6 +193,7 @@
     font-size: 18px;
     float: left;
 }
+.date-select .buttons a .fa {padding: 10px 0;}
 
 .date-select .buttons a:hover {
 

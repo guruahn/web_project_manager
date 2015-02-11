@@ -13,12 +13,6 @@
 class CategoriesController extends Controller {
     public $treeHTML = "";
 
-    function view($id = null,$name = null) {
-        $this->set('title',$name.' - GJboard View App');
-        $this->set('post',$this->Post->getPost( "*", array("id"=>$id) ));
-
-    }
-
     function view_all($project_idx = null, $thispage=1, $perpage=100) {
 
         if(is_null($thispage)) $thispage = 1;
@@ -31,7 +25,7 @@ class CategoriesController extends Controller {
         $where = array( "project_idx"=>$project_idx );
         $categories = $this->Category->getList( array('insert_date'=>'asc'), $limit, $where );
         $this->make_tree(0,0,$project_idx);
-        $this->set('title','All Categires');
+        $this->set('page_title','카테고리 관리');
         $this->set('categories',$categories);
         $this->set('tree',$this->treeHTML);
         $this->set('project_list',$project_list);

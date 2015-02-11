@@ -78,25 +78,29 @@ class PagesController extends Controller {
                     $count_of_tasks = count( $task->getList('task',array('insert_date'=>'asc'), array(0, 1000), array('page_idx'=>$page_obj->idx, 'status'=>1), array("idx")) );
                     $del_open = ($page_obj->state == 4)? "<del>" : "";
                     $del_close = ($page_obj->state == 4)? "</del>" : "";
-                    $this->treeHTML .= "<li class='page ".$state['en']."'><div>";
+                    $this->treeHTML .= "<li class='page ".$state['en']."'><div class='title_wrap'>";
                         $this->treeHTML .= "<span class='radius state ".$state['en']." ".$state['class']."'>".$state['ko']."</span>";
-                        $this->treeHTML .= "<span class='name'>".$del_open."<a href='".$page_obj->link."' target='_blank'>".$page_obj->name."</a>".$del_close."</span>";
-                            if ($_SESSION['LOGIN_LEVEL'] < 3) {
-                                $this->treeHTML .= "<span class='modify'><a href="._BASE_URL_."/pages/editForm/".$page_obj->idx." >수정</a></span>";
-                            }
+                        $this->treeHTML .= "<span class='name'>".$del_open."<a href='".$page_obj->link."' target='_blank'>".$page_obj->name."</a>".$del_close."</span></div>";
+                        $this->treeHTML .= "<div class='page_buttons'>";
                             if($state['en']=='deleted'){
                                 if ($_SESSION['LOGIN_LEVEL'] < 3) {
-                                    $this->treeHTML .= "<span class='del delComplete'><a href="._BASE_URL_."/pages/delComplete/".$page_obj->idx."/".$project_idx." >완전삭제</a></span> ";
+                                    $this->treeHTML .= "<span class='del delComplete'><a title='완전삭제' href="._BASE_URL_."/pages/delComplete/".$page_obj->idx."/".$project_idx." ><i class='fa fa-times'></i></a></span> ";
                                     $this->treeHTML .= "<span class='restoration'><a href="._BASE_URL_."/pages/restoration/".$page_obj->idx."/".$project_idx." > 복구</a></span> ";
+
                                 }
+                                $this->treeHTML .= "</div>";
                             }else{
+
                                 if ($_SESSION['LOGIN_LEVEL'] < 3) {
-                                    $this->treeHTML .= "<span class='del'><a href="._BASE_URL_."/pages/del/".$page_obj->idx."/".$project_idx." >삭제</a></span> ";
+                                    $this->treeHTML .= "<span class='del'><a title='휴지통으로' href="._BASE_URL_."/pages/del/".$page_obj->idx."/".$project_idx." ><i class='fa fa-trash-o'></i></a></span> ";
+                                    $this->treeHTML .= "<span class='modify'><a href="._BASE_URL_."/pages/editForm/".$page_obj->idx."/".$project_idx." ><i class='fa fa-pencil-square-o'></i></a></span>";
                                 }
                                 $this->treeHTML .= "<span class='task'><a data-idx='".$page_obj->idx."' href='#' >할일(<span class='count_of_task_".$count_of_tasks."'>".$count_of_tasks."</span>)</a>";
-                                $taskListHTML = $this->taskList($page_obj->idx, $project_idx);
                                 $this->treeHTML .= "<span class='bullet_on'><i class='fa fa-chevron-circle-up '></i></span><span class='bullet_off'><i class='fa fa-chevron-circle-down '></i></span>";
-                                $this->treeHTML .= "</span></div>".$taskListHTML;
+                                $this->treeHTML .= "</div>";
+                                $taskListHTML = $this->taskList($page_obj->idx, $project_idx);
+
+                                $this->treeHTML .= "</span>".$taskListHTML;
                             }
 
 
@@ -120,7 +124,7 @@ class PagesController extends Controller {
         $limit = array( 0, 100 );
         $where = array( "t.page_idx"=>$page_idx );
         $task->join("user u", "u.idx=t.receiver_idx", "LEFT");
-        $column = array("u.idx as u_idx", "u.id as u_id", "u.name as u_name", "t.idx as idx", "t.title as title", "t.status as status");
+        $column = array("u.idx as u_idx", "u.id as u_id", "u.name as u_name", "t.idx as idx", "t.title as title", "t.status as status", "t.due_date as due_date");
         $task_list = $task->getList("task t", array('t.insert_date'=>'desc'), $limit, $where, $column);
 
         $task_list_HTML = "";
@@ -138,13 +142,13 @@ class PagesController extends Controller {
                     }
                     $task_list_HTML .= '<span class="receiver">'.$task_item_obj->u_name.' &nbsp;</span>';
                     $task_list_HTML .= '<span class="title">'.$task_item_obj->title.'</span>';
-
+                    $task_list_HTML .= '<span class="due_date">'.$task_item_obj->due_date.'</span>';
                 $task_list_HTML .= '</li>';
                 $evenOrOdd = ($evenOrOdd == 'odd')? "even" : "odd";
             }
         }
         if ($_SESSION['LOGIN_LEVEL'] < 3) {
-            $task_list_HTML .= '<li><i class="fa fa-plus add" data-page-idx="'.$page_idx.'" data-project-idx="'.$project_idx.'"></i></li>';
+            $task_list_HTML .= '<li><a href="#" class="add" data-page-idx="'.$page_idx.'" data-project-idx="'.$project_idx.'"><i class="fa fa-plus" ></i> 할일 추가하기</a></li>';
         }
         $task_list_HTML .= '</ul>';
 
@@ -242,13 +246,19 @@ class PagesController extends Controller {
         redirect(_BASE_URL_."/pages/view_all/".$project_idx);
     }
 
-    function editForm($idx = null) {
+    function editForm($idx = null, $project_idx = null) {
         $category = new Category();
         $categories = $category->getList( array('insert_date'=>'asc'), "1000" );
+
+        $project = new Project();
+        $project_list = $project->getList( array('insert_date'=>'desc'), "1000" );
+        if(is_null($project_idx)) $project_idx = $project_list[0]['idx'];
 
         $this->set('categories', $categories);
         $this->set('title','Edit Page');
         $this->set('page',$this->Page->getPage( "*", array("idx"=>$idx) ));
+        $this->set('project_list',$project_list);
+        $this->set('filter_project_id', $project_idx);
     }
 
     function updatePost($idx = null) {

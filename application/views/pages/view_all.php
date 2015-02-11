@@ -44,8 +44,7 @@
     </div>
     <div class="small-11 columns">
         <p class="button-group radius">
-            <span><a href="<?php echo _BASE_URL_;?>/pages/writeform/<?php echo $filter_project_id; ?>" class="button radius tiny">Add</a></span>
-            <span><a href="<?php echo _BASE_URL_;?>/project/view_all" class="button secondary radius tiny">Project List</a></span>
+            <span><a href="<?php echo _BASE_URL_;?>/pages/writeform/<?php echo $filter_project_id; ?>" class="button radius tiny">Add Page</a></span>
             <span><a href="<?php echo _BASE_URL_;?>/categories/view_all/<?php echo $filter_project_id; ?>" class="button secondary radius tiny">Category Add</a></span>
         </p>
     </div>
@@ -86,6 +85,7 @@
         <div class="row submit_task_button_wrap">
             <button class="submit_task button radius tiny" data-page-idx="" data-project-idx="<?php echo $filter_project_id; ?>">추가</button>
         </div>
+
     </div>
 </div>
 <script src="<?php echo _BASE_URL_;?>/public/js/jquery.bpopup.min.js"></script>
