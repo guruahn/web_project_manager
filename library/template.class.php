@@ -42,8 +42,10 @@ class Template {
         } else {
             include (ROOT . DS . 'application' . DS . $view_path . DS . 'header.php');
         }
+        if($this->_controller != "users" && $this->_action != "loginForm"){
+            include (ROOT . DS . 'application' . DS . $view_path . DS . 'sidebar.php');
+        }
 
-        include (ROOT . DS . 'application' . DS . $view_path . DS . 'sidebar.php');
         include (ROOT . DS . 'application' . DS . $view_path . DS . $this->_controller . DS . $this->_action . '.php');
 
         if (file_exists(ROOT . DS . 'application' . DS . $view_path . DS . $this->_controller . DS . 'footer.php')) {
