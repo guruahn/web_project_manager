@@ -51,13 +51,27 @@ class ProjectController extends Controller {
     }
 
     function addProject() {
+        global $is_API;
+        $result = array(
+            'result'=>0,
+            'idx'=>''
+        );
         $data = Array(
             "name" => $_POST['name'],
             "insert_date" => date("Y-m-d H:i:s")
         );
 
-        $this->set('post',$this->Project->add($data));
-        redirect(_BASE_URL_."/project/view_all");
+        $project_idx = $this->Project->add($data);
+        if($project_idx){
+            $result['result'] = 1;
+            $result['idx'] = $project_idx;
+        }
+        if($is_API){
+            echo json_encode($result);
+        }else{
+            redirect(_BASE_URL_."/pages/view_all");
+        }
+
     }
 
     function del($idx = null) {

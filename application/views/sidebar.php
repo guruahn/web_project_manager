@@ -32,7 +32,13 @@
     </div>
     <div class="widget">
         <ul>
-            <li><i class="fa fa-plus"></i> 프로젝트 추가하기</li>
+            <li>
+                <div class="project_add_toggle"><a href="#"><i class="fa fa-plus"></i> 프로젝트 추가하기</a></div>
+                <div class="project_add_toggle hide">
+                    <input type="text" name="project_name" />
+                    <a href="#" class="button tiny radius alert add_project">추가하기</a>
+                </div>
+            </li>
         </ul>
     </div>
     <div class="widget ">
@@ -42,3 +48,4 @@
         </ul>
     </div>
 </div>
+<script type="text/javascript" src="<?php echo _BASE_URL_;?>/public/js/project.js"></script>
