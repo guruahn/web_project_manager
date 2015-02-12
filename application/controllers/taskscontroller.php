@@ -10,6 +10,7 @@
  * @version   1.0
  **/
 
+
 class TasksController extends Controller {
 
     function view($id = null,$name = null) {
@@ -157,63 +158,49 @@ class TasksController extends Controller {
     function sendMail(){
         global $is_API;
 
-        $result = array(
-            'result'=>0
-        );
-
-        /*
-        |
-        | Begin sending mail
-        |
-        */
         $user = new User();
-        $user_id = $user->getUser("id",array('idx'=>$_POST["receiver_idx"]));
-
-        $to = $user_id['id'];
-        $subject = "=?EUC-KR?B?".base64_encode(iconv("UTF-8","EUC-KR","할일이 추가되었습니다."))."?=";
-        // 메세지
+        $user_id = $user->getUser("id, name",array('idx'=>$_POST["receiver_idx"]));
         $message = 'Message: '.PHP_EOL.PHP_EOL;
-        if(isset($_POST['title']))
-        {
+        if(isset($_POST['title'])){
             $message.= '할일 추가 : '.$_POST['title'].PHP_EOL;
         }
-        if(isset($_POST['due_date']))
-        {
+        if(isset($_POST['due_date'])){
             $message.= '기한 : '.$_POST['due_date'].PHP_EOL;
         }
-        // 한 줄이 70 문자를 넘어갈 때를 위하여, wordwrap()을 사용해야 합니다.
-        $message = wordwrap($message, 70);
-        $message = iconv("UTF-8","EUC-KR",$message);
 
-        $headers = 'From: <'.$_SESSION['LOGIN_ID'].'>' . "\r\n" .
-            'Reply-To: '.$_SESSION['LOGIN_ID']. "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
+        $result = array('result'=>0);
 
-        $send = mail($to, $subject, $message, $headers);
+        /* https://github.com/PHPMailer/PHPMailer */
+        require_once(ROOT . DS . 'library' . DS . 'PHPMailer' . DS . 'PHPMailerAutoload.php');
+        $mail = new PHPMailer;
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->SMTPDebug = 2;
+        $mail->CharSet = "utf-8";
+        $mail->Host = 'smtp.gmail.com';                       // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = 'tendency.master@gmail.com';                 // SMTP username
+        $mail->Password = 'ekffu8282';                           // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587;
 
-        if($send > 0)
-        {
-            $result['result'] = $send;
+        $mail->From = $_SESSION['LOGIN_ID'];
+        $mail->FromName = $_SESSION['LOGIN_NAME'];
+        $mail->addAddress($user_id['id'], $user_id['name']);
+        $mail->Subject = $_SESSION['LOGIN_NAME']. "이(가) ". $user_id['name']. "에게 할일을 추가했습니다.";
+        $mail->Body = $message;
+        //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-            if($is_API){
-                echo json_encode($result);
-            }else{
-                return $result;
-            }
-
-            exit;
+        if(!$mail->send()){
+            $result['message'] = 'Mailer Error : '. $mail->ErrorInfo;
+        }else{
+            $result['result'] = 1;
         }
-        else
-        {
-            echo 'ERROR';
-            exit;
-        }
 
-        /*
-        |
-        | End sending mail
-        |
-        */
+        if($is_API){
+            echo json_encode($result);
+        }else{
+            return $result;
+        }
     }
 
 }
