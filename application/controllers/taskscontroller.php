@@ -155,85 +155,57 @@ class TasksController extends Controller {
     }
 
     function sendMail(){
-        //Get your email address
-        // $contact_email = get_option('pp_contact_email');
+        global $is_API;
 
-        //Enter your email address, email from contact form will send to this addresss. Please enter inside quotes ('myemail@email.com')
-        //define('DEST_EMAIL', $contact_email);
-
-        //Change email subject to something more meaningful
-        define('SUBJECT_EMAIL', __( '상담문의', THEMEDOMAIN ));
-
-        //Thankyou message when message sent
-        define('THANKYOU_MESSAGE', __( '감사합니다. 가능한 빠른 시일내에 답변드리겠습니다.', THEMEDOMAIN ));
-
-        //Error message when message can't send
-        define('ERROR_MESSAGE', __( 'Oops! something went wrong, please try to submit later.', THEMEDOMAIN ));
-
+        $result = array(
+            'result'=>0
+        );
 
         /*
         |
         | Begin sending mail
         |
         */
+        $user = new User();
+        $user_id = $user->getUser("id",array('idx'=>$_POST["receiver_idx"]));
 
-        $from_name = $_POST['your_name'];
-        $from_email = $_POST['email'];
-
-        $mime_boundary_1 = md5(time());
-        $mime_boundary_2 = "1_".$mime_boundary_1;
-        $mail_sent = false;
-
-        # Common Headers
-        $headers = "";
-        $headers .= 'From: '.$from_name.'<webmaster@conkrit.com>'.PHP_EOL;
-        $headers .= 'Reply-To: '.$from_name.'<webmaster@conkrit.com>'.PHP_EOL;
-        $headers .= 'Return-Path: '.$from_name.'<webmaster@conkrit.com>'.PHP_EOL;        // these two to set reply address
-        $headers .= "Message-ID: <".$now."webmaster@".$_SERVER['SERVER_NAME'].">";
-        $headers .= "X-Mailer: PHP v".phpversion().PHP_EOL;                  // These two to help avoid spam-filters
-
-        $message = 'Name: '.$from_name.PHP_EOL;
-        $message.= 'Email: '.$from_email.PHP_EOL.PHP_EOL;
-        $message.= 'Message: '.PHP_EOL.$_POST['message'].PHP_EOL.PHP_EOL;
-
-        if(isset($_POST['address']))
+        $to = $user_id['id'];
+        $subject = "=?EUC-KR?B?".base64_encode(iconv("UTF-8","EUC-KR","할일이 추가되었습니다."))."?=";
+        // 메세지
+        $message = 'Message: '.PHP_EOL.PHP_EOL;
+        if(isset($_POST['title']))
         {
-            $message.= 'Address: '.$_POST['address'].PHP_EOL;
+            $message.= '할일 추가 : '.$_POST['title'].PHP_EOL;
         }
-
-        if(isset($_POST['phone']))
+        if(isset($_POST['due_date']))
         {
-            $message.= 'Phone: '.$_POST['phone'].PHP_EOL;
+            $message.= '기한 : '.$_POST['due_date'].PHP_EOL;
         }
+        // 한 줄이 70 문자를 넘어갈 때를 위하여, wordwrap()을 사용해야 합니다.
+        $message = wordwrap($message, 70);
+        $message = iconv("UTF-8","EUC-KR",$message);
 
-        if(isset($_POST['mobile']))
+        $headers = 'From: <'.$_SESSION['LOGIN_ID'].'>' . "\r\n" .
+            'Reply-To: '.$_SESSION['LOGIN_ID']. "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+        $send = mail($to, $subject, $message, $headers);
+
+        if($send > 0)
         {
-            $message.= 'Mobile: '.$_POST['mobile'].PHP_EOL;
-        }
+            $result['result'] = $send;
 
-        if(isset($_POST['company']))
-        {
-            $message.= 'Company: '.$_POST['company'].PHP_EOL;
-        }
-
-        if(isset($_POST['country']))
-        {
-            $message.= 'Country: '.$_POST['country'].PHP_EOL;
-        }
-
-
-        if(!empty($from_name) && !empty($from_email) && !empty($message))
-        {
-            mail(DEST_EMAIL, SUBJECT_EMAIL." : ".$from_name, $message, $headers);
-
-            echo THANKYOU_MESSAGE;
+            if($is_API){
+                echo json_encode($result);
+            }else{
+                return $result;
+            }
 
             exit;
         }
         else
         {
-            echo ERROR_MESSAGE;
-
+            echo 'ERROR';
             exit;
         }
 

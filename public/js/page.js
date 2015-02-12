@@ -120,10 +120,24 @@ function ajax_insert_task(title, page_idx, project_idx, receiver_idx, receiver_n
                 var count = $countObj.text();
                 $countObj.text(Number(count)+1);
                 $('#task_to_pop_up').bPopup().close();
+                ajax_sendmail(title, receiver_idx, receiver_name, due_date);
             }
         }).fail(function(response){
             console.log(printr_json(response));
         });
+}
+
+function ajax_sendmail(title, receiver_idx, receiver_name, due_date) {
+    $.ajax({
+        type: "POST",
+        url: _BASE_URL+"/api/tasks/sendMail/",
+        data: {title: title, receiver_idx: receiver_idx, receiver_name: receiver_name, due_date: due_date},
+        dataType: "json"
+    }).success(function(data){
+        console.log(data.result);
+    }).fail(function(response){
+        console.log(printr_json(response));
+    });
 }
 
 function makeStatus(status){
