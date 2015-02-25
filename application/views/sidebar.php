@@ -18,12 +18,18 @@
                 $title = text_cut_utf8($obj_project->name, 70);
                 if( $obj_project->idx == $filter_project_id )$selected = "selected";
                 ?>
-                <li class='<?php echo $selected; ?>'>
-                    <i class="fa fa-caret-right"></i>
-                    <a href="<?php echo _BASE_URL_;?>/pages/view_all/<?php echo $obj_project->idx; ?>"><?php echo $title; ?></a>
-                    <div class="icons">
-                        <i class="fa fa-pencil"></i>
-                        <i class="fa fa-times"></i>
+                <li class='<?php echo $selected; ?>' data-project-idx="<?php echo $obj_project->idx; ?>">
+                    <div class="project_edit_toggle">
+                        <i class="fa fa-caret-right"></i>
+                        <a href="<?php echo _BASE_URL_;?>/pages/view_all/<?php echo $obj_project->idx; ?>" class="title"><?php echo $title; ?></a>
+                        <div class="icons">
+                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-times"></i>
+                        </div>
+                    </div>
+                    <div class="project_edit_toggle hide">
+                        <input type="text" name="project_name" value="<?php echo $title; ?>" />
+                        <a href="#" class="button tiny radius alert edit_project">수정</a> <a href="#" class="cancle" >취소</a>
                     </div>
                 </li>
             <?php
@@ -40,7 +46,7 @@
                 <div class="project_add_toggle"><a href="#"><i class="fa fa-plus"></i> 프로젝트 추가하기</a></div>
                 <div class="project_add_toggle hide">
                     <input type="text" name="project_name" />
-                    <a href="#" class="button tiny radius alert add_project">추가하기</a>
+                    <a href="#" class="button tiny radius alert add_project">추가하기</a> <a href="#" class="cancle" >취소</a>
                 </div>
             </li>
         </ul>

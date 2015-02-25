@@ -85,7 +85,7 @@ $(function(){
 function ajax_update_task_status(idx, status, page_idx){
     $.ajax({
         type: "POST",
-        url: _BASE_URL+"/api/tasks/updateStatus/"+idx,
+        url: _BASE_URL_+"/api/tasks/updateStatus/"+idx,
         data: {status: status},
         dataType: "json"
     }).success(function(data){
@@ -109,7 +109,7 @@ function ajax_update_task_status(idx, status, page_idx){
 function ajax_insert_task(title, page_idx, project_idx, receiver_idx, receiver_name, due_date){
     $.ajax({
         type: "POST",
-        url: _BASE_URL+"/api/tasks/addTask/",
+        url: _BASE_URL_+"/api/tasks/addTask/",
         data: {title: title, page_idx: page_idx, project_idx: project_idx, receiver_idx: receiver_idx, due_date: due_date},
         dataType: "json"
     }).success(function(data){
@@ -130,7 +130,7 @@ function ajax_insert_task(title, page_idx, project_idx, receiver_idx, receiver_n
 function ajax_sendmail(title, receiver_idx, receiver_name, due_date) {
     $.ajax({
         type: "POST",
-        url: _BASE_URL+"/api/tasks/sendMail/",
+        url: _BASE_URL_+"/api/tasks/sendMail/",
         data: {title: title, receiver_idx: receiver_idx, receiver_name: receiver_name, due_date: due_date},
         dataType: "json"
     }).success(function(data){

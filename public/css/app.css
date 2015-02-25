@@ -62,6 +62,9 @@ body ul li { list-style: none; }
 }
 #sidebar .project_list li:hover .icons { display: block; }
 
+#sidebar .project_add_toggle .cancle { font-size: 0.8em; vertical-align: bottom;}
+
+
 /*Page list*/
 .pages-view_all .state_list { text-align: right; }
 .pages-view_all .button.tiny {

@@ -90,13 +90,22 @@ class ProjectController extends Controller {
         $this->set('project',$this->Project->getPost( "*", array("idx"=>$idx) ));
     }
 
-    function updateProject($idx = null) {
-
+    function editProject($idx = null) {
+        global $is_API;
+        $result = array(
+            'result'=>0,
+            'idx'=>''
+        );
         $data = Array(
             "name" => trim(strval($_POST['name']))
         );
-        $this->Project->updateProject($idx, $data);
-        redirect(_BASE_URL_."/project/view_all");
+        $result['result'] = $this->Project->edit($idx, $data);
+
+        if($is_API){
+            echo json_encode($result);
+        }else{
+            redirect(_BASE_URL_."/pages/view_all");
+        }
     }
 
     function uploadFile($file = null) {

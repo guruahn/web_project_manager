@@ -33,7 +33,7 @@ if( !is_login() && $controller != "users") redirect(_BASE_URL_.'/users/loginForm
         <script src="<?php echo _BASE_URL_; ?>/public/js/foundation/foundation.min.js"></script>
         <script src="<?php echo _BASE_URL_; ?>/public/js/foundation/foundation.accordion.js"></script>
         <script>
-            var _BASE_URL = '<?php echo _BASE_URL_; ?>';
+            var _BASE_URL_ = '<?php echo _BASE_URL_; ?>';
         </script>
     </head>
     <body class="<?php echo $controller; ?> <?php echo $controller."-",$action; ?>">
