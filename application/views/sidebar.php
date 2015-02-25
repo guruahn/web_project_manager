@@ -21,6 +21,10 @@
                 <li class='<?php echo $selected; ?>'>
                     <i class="fa fa-caret-right"></i>
                     <a href="<?php echo _BASE_URL_;?>/pages/view_all/<?php echo $obj_project->idx; ?>"><?php echo $title; ?></a>
+                    <div class="icons">
+                        <i class="fa fa-pencil"></i>
+                        <i class="fa fa-times"></i>
+                    </div>
                 </li>
             <?php
             endforeach;

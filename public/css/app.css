@@ -29,6 +29,12 @@ body ul li { list-style: none; }
     font-size: 0.9em;
     padding: 5px;
 }
+#sidebar .project_list {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+#sidebar .project_list li { position: relative; }
 #sidebar .project_list li:hover {
     background-color: #fff;
 }
@@ -39,11 +45,23 @@ body ul li { list-style: none; }
     visibility: visible;
 }
 #sidebar .project_list li.selected { font-weight: bold;}
-#sidebar .project_list {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ddd;
+#sidebar .project_list li .icons {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: 4px;
+
 }
+#sidebar .project_list li .icons .fa {
+    color: #ddd;
+    cursor: pointer;
+    padding: 5px 2px;
+}
+#sidebar .project_list li .icons .fa:hover{
+    color: #777777;
+}
+#sidebar .project_list li:hover .icons { display: block; }
+
 /*Page list*/
 .pages-view_all .state_list { text-align: right; }
 .pages-view_all .button.tiny {
