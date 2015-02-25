@@ -74,14 +74,16 @@ class ProjectController extends Controller {
 
     }
 
-    function del($idx = null) {
-
-        if( $this->Project->del($idx) ){
-            msg_page('Success delete project.', _BASE_URL_."/project/view_all");
-            exit;
+    function delProject($idx = null) {
+        global $is_API;
+        $result = array(
+            'result'=>0
+        );
+        $result['result'] = $this->Project->del($idx);
+        if($is_API){
+            echo json_encode($result);
         }else{
-            msg_page('Cannot delete this project.');
-            exit;
+            redirect(_BASE_URL_."/pages/view_all");
         }
     }
 

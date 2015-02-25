@@ -24,7 +24,7 @@
                         <a href="<?php echo _BASE_URL_;?>/pages/view_all/<?php echo $obj_project->idx; ?>" class="title"><?php echo $title; ?></a>
                         <div class="icons">
                             <i class="fa fa-pencil"></i>
-                            <i class="fa fa-times"></i>
+                            <i class="fa fa-times" data-project-idx="<?php echo $obj_project->idx; ?>"></i>
                         </div>
                     </div>
                     <div class="project_edit_toggle hide">
@@ -58,4 +58,15 @@
         </ul>
     </div>
 </div>
+
+<div id="projectDeleteModal" class="reveal-modal" data-reveal>
+    <h2>정말 삭제하시겠습니까?</h2>
+    <p class="lead">프로젝트를 삭제하면 관련 자료들도 모두 함께 삭제되며 복구할 수 없습니다.</p>
+    <p>
+        <a href="#" class="button small radius go-delete" data-project-idx="">예, 삭제하겠습니다.</a>
+        <a href="#" class="cancle">취소</a>
+    </p>
+    <a class="cancle close-reveal-modal">&#215;</a>
+</div>
+
 <script type="text/javascript" src="<?php echo _BASE_URL_;?>/public/js/project.js"></script>
